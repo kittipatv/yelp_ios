@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="88" id="KGk-i7-Jjw" customClass="BusinessCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="86"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lRY-Px-2Un">
+                        <rect key="frame" x="8" y="8" width="70" height="70"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="70" id="ULK-dB-1VJ"/>
+                            <constraint firstAttribute="width" constant="70" id="ydr-3Y-quV"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="1. Grand Pu Bah" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pbm-t0-mTc">
+                        <rect key="frame" x="86" y="8" width="183" height="14.5"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TRe-IC-QYq">
+                        <rect key="frame" x="300" y="29" width="12" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="469 reviews" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EoN-IT-uOI">
+                        <rect key="frame" x="178" y="29" width="56" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88 Division St, Mission Bay" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xe1-pB-lJL">
+                        <rect key="frame" x="86" y="49" width="127.5" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b9Z-av-ZX9">
+                        <rect key="frame" x="86" y="26" width="84" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="84" id="FBD-3S-pjq"/>
+                            <constraint firstAttribute="height" constant="17" id="hJZ-tG-dM5"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.07 mi" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tsx-7K-7LQ">
+                        <rect key="frame" x="277" y="10" width="35" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thai, Seafood, Salad" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XL1-n6-HLo">
+                        <rect key="frame" x="86" y="63" width="97.5" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="tsx-7K-7LQ" secondAttribute="trailing" constant="8" id="09I-hl-DgW"/>
+                    <constraint firstItem="XL1-n6-HLo" firstAttribute="leading" secondItem="lRY-Px-2Un" secondAttribute="trailing" constant="8" id="3EV-hp-uj8"/>
+                    <constraint firstItem="pbm-t0-mTc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="7jL-eV-f1t"/>
+                    <constraint firstItem="tsx-7K-7LQ" firstAttribute="leading" secondItem="pbm-t0-mTc" secondAttribute="trailing" constant="8" id="8NW-Bv-TrC"/>
+                    <constraint firstItem="XL1-n6-HLo" firstAttribute="top" secondItem="xe1-pB-lJL" secondAttribute="bottom" constant="2" id="9S0-Ks-DQU"/>
+                    <constraint firstItem="lRY-Px-2Un" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="I45-d8-EAI"/>
+                    <constraint firstItem="pbm-t0-mTc" firstAttribute="leading" secondItem="lRY-Px-2Un" secondAttribute="trailing" constant="8" id="IFe-4C-A1W"/>
+                    <constraint firstItem="lRY-Px-2Un" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="L2r-rQ-rKb"/>
+                    <constraint firstAttribute="trailing" secondItem="TRe-IC-QYq" secondAttribute="trailing" constant="8" id="PRE-cy-MGH"/>
+                    <constraint firstItem="b9Z-av-ZX9" firstAttribute="leading" secondItem="lRY-Px-2Un" secondAttribute="trailing" constant="8" id="RFK-Q6-zYo"/>
+                    <constraint firstItem="xe1-pB-lJL" firstAttribute="leading" secondItem="lRY-Px-2Un" secondAttribute="trailing" constant="8" id="Sqe-rK-L9I"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="lRY-Px-2Un" secondAttribute="bottom" constant="8" id="aqn-kA-NGt"/>
+                    <constraint firstItem="tsx-7K-7LQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="bi8-zS-ubj"/>
+                    <constraint firstItem="EoN-IT-uOI" firstAttribute="leading" secondItem="b9Z-av-ZX9" secondAttribute="trailing" constant="8" id="dB3-JA-aNf"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="XL1-n6-HLo" secondAttribute="bottom" constant="8" id="dHq-Zw-NIp"/>
+                    <constraint firstItem="xe1-pB-lJL" firstAttribute="top" secondItem="b9Z-av-ZX9" secondAttribute="bottom" constant="6" id="eln-v4-Vqd"/>
+                    <constraint firstItem="b9Z-av-ZX9" firstAttribute="top" secondItem="pbm-t0-mTc" secondAttribute="bottom" constant="3.5" id="qbP-vG-DU1"/>
+                    <constraint firstItem="TRe-IC-QYq" firstAttribute="top" secondItem="tsx-7K-7LQ" secondAttribute="bottom" constant="7" id="rVw-cq-Atb"/>
+                    <constraint firstItem="b9Z-av-ZX9" firstAttribute="centerY" secondItem="EoN-IT-uOI" secondAttribute="centerY" id="w72-6g-RQF"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="addressLabel" destination="xe1-pB-lJL" id="Gnx-HM-DJi"/>
+                <outlet property="categoryLabel" destination="XL1-n6-HLo" id="HYw-z5-DnE"/>
+                <outlet property="distanceLabel" destination="tsx-7K-7LQ" id="9wT-nx-SSl"/>
+                <outlet property="nameLabel" destination="pbm-t0-mTc" id="bWd-v3-7Kz"/>
+                <outlet property="ratingImageView" destination="b9Z-av-ZX9" id="RIc-tk-zGM"/>
+                <outlet property="ratingLabel" destination="EoN-IT-uOI" id="RFM-a3-agz"/>
+                <outlet property="thumbImageView" destination="lRY-Px-2Un" id="aUu-UN-AYe"/>
+            </connections>
+            <point key="canvasLocation" x="353" y="305"/>
+        </tableViewCell>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
