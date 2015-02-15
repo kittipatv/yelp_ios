@@ -17,9 +17,11 @@ NSString * const kYelpConsumerSecret = @"33QCvh5bIF5jIHR5klQr7RtBDhQ";
 NSString * const kYelpToken = @"uRcRswHFYa1VkDrGV6LAW2F8clGh5JHV";
 NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
-@interface MainViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface MainViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) YelpClient *client;
 @property (nonatomic, strong) NSArray *businesses;
 
@@ -33,17 +35,20 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     if (self) {
         // You can register for Yelp API keys here: http://www.yelp.com/developers/manage_api_keys
         self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
-        
-        [self.client searchWithTerm:@"Thai" success:^(AFHTTPRequestOperation *operation, id response) {
-            NSLog(@"response: %@", response);
-            NSArray *businessDictionaries = response[@"businesses"];
-            self.businesses = [Business businessesWithDictionaries:businessDictionaries];
-            [self.tableView reloadData];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"error: %@", [error description]);
-        }];
+        [self searchWithText:@""];
     }
     return self;
+}
+
+- (void)searchWithText:(NSString *)text {
+    [self.client searchWithTerm:text success:^(AFHTTPRequestOperation *operation, id response) {
+        NSLog(@"response: %@", response);
+        NSArray *businessDictionaries = response[@"businesses"];
+        self.businesses = [Business businessesWithDictionaries:businessDictionaries];
+        [self.tableView reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error: %@", [error description]);
+    }];
 }
 
 - (void)viewDidLoad
@@ -58,6 +63,11 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     self.title = @"Yelp";
+    
+    self.searchBar = [[UISearchBar alloc] init];
+    self.searchBar.delegate = self;
+    
+    self.navigationItem.titleView = self.searchBar;
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,6 +84,10 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     BusinessCell *cell = (BusinessCell *)[self.tableView dequeueReusableCellWithIdentifier:@"BusinessCell"];
     cell.business = self.businesses[indexPath.row];
     return cell;
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    [self searchWithText:searchText];
 }
 
 @end

@@ -40,7 +40,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88 Division St, Mission Bay" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xe1-pB-lJL">
-                        <rect key="frame" x="86" y="49" width="127.5" height="12"/>
+                        <rect key="frame" x="86" y="49" width="226" height="12"/>
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
@@ -82,6 +82,7 @@
                     <constraint firstItem="EoN-IT-uOI" firstAttribute="leading" secondItem="b9Z-av-ZX9" secondAttribute="trailing" constant="8" id="dB3-JA-aNf"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="XL1-n6-HLo" secondAttribute="bottom" constant="8" id="dHq-Zw-NIp"/>
                     <constraint firstItem="xe1-pB-lJL" firstAttribute="top" secondItem="b9Z-av-ZX9" secondAttribute="bottom" constant="6" id="eln-v4-Vqd"/>
+                    <constraint firstAttribute="trailing" secondItem="xe1-pB-lJL" secondAttribute="trailing" constant="8" id="hFb-cT-I7W"/>
                     <constraint firstItem="b9Z-av-ZX9" firstAttribute="top" secondItem="pbm-t0-mTc" secondAttribute="bottom" constant="3.5" id="qbP-vG-DU1"/>
                     <constraint firstItem="TRe-IC-QYq" firstAttribute="top" secondItem="tsx-7K-7LQ" secondAttribute="bottom" constant="7" id="rVw-cq-Atb"/>
                     <constraint firstItem="b9Z-av-ZX9" firstAttribute="centerY" secondItem="EoN-IT-uOI" secondAttribute="centerY" id="w72-6g-RQF"/>
