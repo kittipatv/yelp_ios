@@ -13,7 +13,7 @@
 @property (nonatomic, readonly) NSString *categoryFilter;
 @property (nonatomic, strong) NSMutableSet *selectedCategories;
 @property (nonatomic, assign) BOOL offeringDeal;
-@property (nonatomic, assign) double radius;
+@property (nonatomic, assign) NSInteger radius;
 @property (nonatomic, assign) NSInteger sort;
 
 @end

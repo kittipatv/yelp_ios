@@ -28,6 +28,8 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 @property (nonatomic, strong) NSArray *businesses;
 @property (nonatomic, strong) BusinessCell *prototypeBusinessCell;
 @property (nonatomic, strong) Filters *filters;
+@property (nonatomic, assign) BOOL loadingData;
+@property (nonatomic, assign) BOOL reachedBottom;
 
 @end
 
@@ -39,19 +41,23 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     if (self) {
         // You can register for Yelp API keys here: http://www.yelp.com/developers/manage_api_keys
         self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
-        [self searchWithText:@""];
     }
     return self;
 }
 
 - (void)searchWithText:(NSString *)text {
-    [self.client searchWithTerm:text success:^(AFHTTPRequestOperation *operation, id response) {
+    self.loadingData = YES;
+    [self.client searchWithTerm:text filters:self.filters success:^(AFHTTPRequestOperation *operation, id response) {
         NSLog(@"response: %@", response);
         NSArray *businessDictionaries = response[@"businesses"];
         self.businesses = [Business businessesWithDictionaries:businessDictionaries];
-        [self.tableView reloadData];
+        [self.tableView beginUpdates];
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView endUpdates];
+        self.loadingData = NO;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error: %@", [error description]);
+        self.loadingData = NO;
     }];
 }
 
@@ -77,6 +83,17 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilterButton)];
     
     self.prototypeBusinessCell = [[BusinessCell alloc] init];
+    
+    UIView *tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+    UIActivityIndicatorView *loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [loadingView startAnimating];
+    loadingView.center = tableFooterView.center;
+    [tableFooterView addSubview:loadingView];
+    self.tableView.tableFooterView = tableFooterView;
+    
+    self.reachedBottom = NO;
+    
+    [self searchWithText:@""];
 }
 
 - (void)onFilterButton {
@@ -98,6 +115,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     NSLog(@"filters %@", filters);
     NSLog(@"Fire new network event");
     self.filters = filters;
+    [self searchWithText:self.searchBar.text];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
