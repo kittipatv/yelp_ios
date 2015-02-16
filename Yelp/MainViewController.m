@@ -25,7 +25,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) YelpClient *client;
-@property (nonatomic, strong) NSArray *businesses;
+@property (nonatomic, strong) NSMutableArray *businesses;
 @property (nonatomic, strong) BusinessCell *prototypeBusinessCell;
 @property (nonatomic, strong) Filters *filters;
 @property (nonatomic, assign) BOOL loadingData;
@@ -50,21 +50,27 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     [self.client searchWithTerm:text filters:self.filters success:^(AFHTTPRequestOperation *operation, id response) {
         NSLog(@"response: %@", response);
         NSArray *businessDictionaries = response[@"businesses"];
-        self.businesses = [Business businessesWithDictionaries:businessDictionaries];
-        [self.tableView beginUpdates];
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self.tableView endUpdates];
+        [self.businesses setArray:[Business businessesWithDictionaries:businessDictionaries]];
+        [self animateTable];
         self.loadingData = NO;
+        self.reachedBottom = NO;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error: %@", [error description]);
         self.loadingData = NO;
     }];
 }
 
+- (void)animateTable {
+    [self.tableView beginUpdates];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView endUpdates];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
+    self.businesses = [NSMutableArray array];
     self.filters = [[Filters alloc] init];
     
     self.tableView.dataSource = self;
@@ -84,13 +90,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     
     self.prototypeBusinessCell = [[BusinessCell alloc] init];
     
-    UIView *tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
-    UIActivityIndicatorView *loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    [loadingView startAnimating];
-    loadingView.center = tableFooterView.center;
-    [tableFooterView addSubview:loadingView];
-    self.tableView.tableFooterView = tableFooterView;
-    
+    self.loadingData = NO;
     self.reachedBottom = NO;
     
     [self searchWithText:@""];
@@ -129,9 +129,40 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == self.businesses.count - 1 && !self.reachedBottom && !self.loadingData) {
+        [self loadMoreData];
+    }
+    
     BusinessCell *cell = (BusinessCell *)[self.tableView dequeueReusableCellWithIdentifier:@"BusinessCell"];
     cell.business = self.businesses[indexPath.row];
     return cell;
+}
+
+- (void)loadMoreData {
+    UIView *tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+    UIActivityIndicatorView *loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [loadingView startAnimating];
+    loadingView.center = tableFooterView.center;
+    [tableFooterView addSubview:loadingView];
+    self.tableView.tableFooterView = tableFooterView;
+    
+    [self.client searchWithTerm:self.searchBar.text filters:self.filters offset:self.businesses.count success:^(AFHTTPRequestOperation *operation, id response) {
+        NSLog(@"response: %@", response);
+        NSArray *businessDictionaries = response[@"businesses"];
+        if (businessDictionaries.count) {
+            [self.businesses addObjectsFromArray:[Business businessesWithDictionaries:businessDictionaries]];
+            [self.tableView reloadData];
+        } else {
+            self.reachedBottom = YES;
+        }
+        self.loadingData = NO;
+        [self.tableView.tableFooterView removeFromSuperview];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error: %@", [error description]);
+        self.reachedBottom = YES;
+        self.loadingData = NO;
+        [self.tableView.tableFooterView removeFromSuperview];
+    }];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {

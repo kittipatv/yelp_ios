@@ -21,10 +21,14 @@
 }
 
 - (AFHTTPRequestOperation *)searchWithTerm:(NSString *)term success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
-    return [self searchWithTerm:term filters:nil success:success failure:failure];
+    return [self searchWithTerm:term filters:nil offset:0 success:success failure:failure];
 }
 
 - (AFHTTPRequestOperation *)searchWithTerm:(NSString *)term filters:(Filters *)filters success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
+    return [self searchWithTerm:term filters:filters offset:0 success:success failure:failure];
+}
+
+- (AFHTTPRequestOperation *)searchWithTerm:(NSString *)term filters:(Filters *)filters offset:(NSInteger)offset success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
     // For additional parameters, see http://www.yelp.com/developers/documentation/v2/search_api
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     [parameters addEntriesFromDictionary:@{@"term": term, @"ll" : @"37.774866,-122.394556"}];
@@ -39,6 +43,9 @@
         if (filters.selectedCategories.count) {
             [parameters setObject:filters.categoryFilter forKey:@"category_filter"];
         }
+    }
+    if (offset) {
+        [parameters setObject:[NSNumber numberWithInteger:offset] forKey:@"offset"];
     }
     
     return [self GET:@"search" parameters:parameters success:success failure:failure];

@@ -19,4 +19,6 @@
 
 - (AFHTTPRequestOperation *)searchWithTerm:(NSString *)term filters:(Filters *)filters success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
+- (AFHTTPRequestOperation *)searchWithTerm:(NSString *)term filters:(Filters *)filters offset:(NSInteger)offset success:(void (^)(AFHTTPRequestOperation *operation, id response))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 @end
