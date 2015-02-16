@@ -2,7 +2,7 @@
 
 This is a Yelp search app using the [Yelp API](http://developer.rottentomatoes.com/docs/read/JSON).
 
-Time spent: `<Number of hours spent>` 1:15pm-4:15pm 8:35pm-9:15pm 9:30pm- (-15min)
+Time spent: `<Number of hours spent>` 1:15pm-4:15pm [3hr] 8:35pm-9:15pm 9:30pm-1:50am (-15min) [5hr] 7:45am-
 
 ### Features
 
@@ -22,7 +22,7 @@ Time spent: `<Number of hours spent>` 1:15pm-4:15pm 8:35pm-9:15pm 9:30pm- (-15mi
 #### Optional
 
 - [ ] Search results page
-   - [ ] Infinite scroll for restaurant results
+   - [x] Infinite scroll for restaurant results
    - [ ] Implement map view of restaurant results
 - [x] Filter page
    - [x] Radius filter should expand as in the real Yelp app

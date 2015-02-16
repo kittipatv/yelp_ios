@@ -166,6 +166,7 @@
     cell.titleLabel.text = @"Offering a deal";
     cell.on = self.filters.offeringDeal;
     cell.delegate = self;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
@@ -203,11 +204,15 @@
     cell.titleLabel.text = self.categories[row][@"name"];
     cell.on = [self.filters.selectedCategories containsObject:self.categories[row][@"code"]];
     cell.delegate = self;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
+        case 0:
+            [self didSelectDeal:indexPath];
+            break;
         case 1:
             [self didSelectDistanceAtIndexPath:indexPath];
             break;
@@ -223,31 +228,65 @@
     }
 }
 
+- (void)didSelectDeal:(NSIndexPath *)indexPath {
+    SwitchCell *cell = (SwitchCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    [cell setOn:!cell.on animated:YES];
+}
+
 - (void)didSelectDistanceAtIndexPath:(NSIndexPath *)indexPath {
     if (self.distanceExpanded) {
-        self.filters.radius = [self.distances[indexPath.row][@"meters"] integerValue];
+        if (indexPath.row != self.selectedDistanceIndex) {
+            [self clearPreviousCellAtIndexPath:[NSIndexPath indexPathForRow:self.selectedDistanceIndex inSection:indexPath.section]];
+        }
+        
         self.selectedDistanceIndex = indexPath.row;
+        self.filters.radius = [self.distances[indexPath.row][@"meters"] integerValue];
         self.distanceExpanded = NO;
+        
+        [self animateSelectTickCellAtIndexPath:indexPath];
     } else {
         self.distanceExpanded = YES;
+        [self animateSection:indexPath.section];
     }
-    [self animateSection:indexPath.section];
 }
 
 - (void)didSelectSortAtIndexPath:(NSIndexPath *)indexPath {
     if (self.sortExpanded) {
+        if (indexPath.row != self.filters.sort) {
+            [self clearPreviousCellAtIndexPath:[NSIndexPath indexPathForRow:self.filters.sort inSection:indexPath.section]];
+        }
+        
         self.filters.sort = indexPath.row;
         self.sortExpanded = NO;
+        
+        [self animateSelectTickCellAtIndexPath:indexPath];
     } else {
         self.sortExpanded = YES;
+        [self animateSection:indexPath.section];
     }
-    [self animateSection:indexPath.section];
+}
+
+- (void)clearPreviousCellAtIndexPath:(NSIndexPath *)indexPath {
+    TickCell *previousCell = (TickCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    previousCell.on = NO;
+}
+
+- (void)animateSelectTickCellAtIndexPath:(NSIndexPath *)indexPath {
+    TickCell *cell = (TickCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    [cell setOn:YES animated:YES completion:^(BOOL finished) {
+        if (finished) {
+            [self animateSection:indexPath.section];
+        }
+    }];
 }
 
 - (void)didSelectCategoryAtIndexPath:(NSIndexPath *)indexPath {
     if (!self.categoryExpanded && indexPath.row == 3) {
         self.categoryExpanded = YES;
         [self animateSection:indexPath.section];
+    } else {
+        SwitchCell *cell = (SwitchCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        [cell setOn:!cell.on animated:YES];
     }
 }
 

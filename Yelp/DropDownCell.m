@@ -8,10 +8,16 @@
 
 #import "DropDownCell.h"
 
+@interface DropDownCell()
+
+@property (weak, nonatomic) IBOutlet UIImageView *arrowImage;
+
+@end
+
 @implementation DropDownCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    self.arrowImage.image = [self.arrowImage.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

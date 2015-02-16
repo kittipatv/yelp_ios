@@ -10,14 +10,18 @@
 
 @interface TickCell()
 
-@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *checkImage;
+@property (nonatomic, strong) UIImage *circleImage;
+@property (nonatomic, strong) UIImage *checkedImage;
 
 @end
 
 @implementation TickCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    self.circleImage = [[UIImage imageNamed:@"circle"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    self.checkedImage = [[UIImage imageNamed:@"check"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    self.checkImage.tintColor = [UIColor lightGrayColor];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -27,8 +31,19 @@
 }
 
 - (void)setOn:(BOOL)on {
+    [self setOn:on animated:NO completion:nil];
+}
+
+- (void)setOn:(BOOL)on animated:(BOOL)animated completion:(void (^)(BOOL finished))completion {
+    if (self.on == on) {
+        animated = NO;
+    }
     _on = on;
-    self.statusLabel.text = self.on ? @"√" : @"";
+    NSTimeInterval interval = animated ? 0.3 : 0.0;
+    [UIView transitionWithView:self.checkImage duration:interval options:UIViewAnimationOptionTransitionFlipFromBottom animations:^{
+        self.checkImage.tintColor = self.on ? [[[UIApplication sharedApplication] keyWindow] tintColor] : [UIColor lightGrayColor];
+        self.checkImage.image = self.on ? self.checkedImage : self.circleImage;
+    } completion:completion];
 }
 
 @end

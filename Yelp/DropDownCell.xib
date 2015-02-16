@@ -15,23 +15,38 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jig-kl-SuR">
-                        <rect key="frame" x="8" y="11" width="42" height="21"/>
+                        <rect key="frame" x="8" y="11" width="42" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow" translatesAutoresizingMaskIntoConstraints="NO" id="MJN-Gn-NZz">
+                        <rect key="frame" x="284" y="8" width="28" height="28"/>
+                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="28" id="b9f-YX-NXY"/>
+                            <constraint firstAttribute="height" constant="28" id="bjV-5x-s78"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="centerY" secondItem="jig-kl-SuR" secondAttribute="centerY" id="1jR-pk-m4d"/>
                     <constraint firstItem="jig-kl-SuR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="IJB-3l-bod"/>
+                    <constraint firstAttribute="bottom" secondItem="MJN-Gn-NZz" secondAttribute="bottom" constant="8" id="MOd-Ai-WYL"/>
+                    <constraint firstAttribute="trailing" secondItem="MJN-Gn-NZz" secondAttribute="trailing" constant="8" id="Y9f-zr-DXk"/>
+                    <constraint firstItem="MJN-Gn-NZz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="xD8-WE-8Ac"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="arrowImage" destination="MJN-Gn-NZz" id="m1I-yj-kpU"/>
                 <outlet property="titleLabel" destination="jig-kl-SuR" id="gXu-Ky-dwd"/>
             </connections>
             <point key="canvasLocation" x="379" y="244"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="arrow" width="256" height="256"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
