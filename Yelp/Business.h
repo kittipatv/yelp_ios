@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
 
-@interface Business : NSObject
+@interface Business : NSObject<MKAnnotation>
 
 @property (strong, nonatomic) NSString *imageUrl;
 @property (strong, nonatomic) NSString *name;
@@ -17,6 +18,7 @@
 @property (strong, nonatomic) NSString *address;
 @property (strong, nonatomic) NSString *categories;
 @property (assign, nonatomic) CGFloat distance;
+@property (assign, nonatomic) CLLocationCoordinate2D myCenter;
 
 + (NSArray *)businessesWithDictionaries:(NSArray *)dictionaries;
 

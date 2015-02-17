@@ -8,6 +8,8 @@
 
 #import "MainViewController.h"
 
+#import <MapKit/MapKit.h>
+
 #import "Business.h"
 #import "BusinessCell.h"
 #import "Filters.h"
@@ -19,10 +21,13 @@ NSString * const kYelpConsumerSecret = @"33QCvh5bIF5jIHR5klQr7RtBDhQ";
 NSString * const kYelpToken = @"uRcRswHFYa1VkDrGV6LAW2F8clGh5JHV";
 NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
-@interface MainViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, FiltersViewControllerDelegate, UISearchBarDelegate>
+@interface MainViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, FiltersViewControllerDelegate, UISearchBarDelegate, MKMapViewDelegate, CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
+@property (nonatomic, strong) UIView *activeView;
+@property (nonatomic, strong) UIView *inactiveView;
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) YelpClient *client;
 @property (nonatomic, strong) NSMutableArray *businesses;
@@ -30,6 +35,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 @property (nonatomic, strong) Filters *filters;
 @property (nonatomic, assign) BOOL loadingData;
 @property (nonatomic, assign) BOOL reachedBottom;
+@property (nonatomic, strong) CLLocationManager *locationManager;
 
 @end
 
@@ -47,10 +53,13 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
 - (void)searchWithText:(NSString *)text {
     self.loadingData = YES;
-    [self.client searchWithTerm:text filters:self.filters success:^(AFHTTPRequestOperation *operation, id response) {
+    
+    [self.client searchWithTerm:text filters:self.filters offset:0 location:self.locationManager.location.coordinate success:^(AFHTTPRequestOperation *operation, id response) {
         NSLog(@"response: %@", response);
         NSArray *businessDictionaries = response[@"businesses"];
+        [self.mapView removeAnnotations:self.mapView.annotations];
         [self.businesses setArray:[Business businessesWithDictionaries:businessDictionaries]];
+        [self.mapView addAnnotations:self.businesses];
         [self animateTable];
         self.loadingData = NO;
         self.reachedBottom = NO;
@@ -87,6 +96,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     
     self.navigationItem.titleView = self.searchBar;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilterButton)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Map" style:UIBarButtonItemStylePlain target:self action:@selector(onViewButton)];
     
     self.prototypeBusinessCell = [[BusinessCell alloc] init];
     
@@ -95,6 +105,22 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:gestureRecognizer];
+    
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
+    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        NSLog(@"requesting permissions");
+        [self.locationManager requestWhenInUseAuthorization];
+    }
+    
+    self.mapView.delegate = self;
+    self.mapView.showsUserLocation = YES;
+    self.mapView.rotateEnabled = YES;
+    
+    self.activeView = self.tableView;
+    self.inactiveView = self.mapView;
+    
+    [self.mapView removeFromSuperview];
     
     [self searchWithText:@""];
 }
@@ -109,6 +135,34 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     vc.delegate = self;
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nvc animated:YES completion:nil];
+}
+
+- (void)onViewButton {
+    [UIView transitionWithView:self.view duration:0.3 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
+        UIView *temp = self.activeView;
+        self.activeView = self.inactiveView;
+        self.inactiveView = temp;
+
+        [self.inactiveView removeFromSuperview];
+        [self.view addSubview:self.activeView];
+        
+        NSDictionary *viewDictionary = @{@"activeView":self.activeView};
+        NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[activeView]-0-|" options:0 metrics:nil views:viewDictionary];
+        NSArray *horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[activeView]-0-|" options:0 metrics:nil views:viewDictionary];
+        [self.view addConstraints:verticalConstraints];
+        [self.view addConstraints:horizontalConstraints];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            self.navigationItem.rightBarButtonItem.title = self.inactiveView == self.mapView ? @"Map" : @"List";
+        }
+    }];
+}
+
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    NSLog(@"Location updated %@", userLocation);
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 800, 800);
+    [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

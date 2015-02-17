@@ -37,6 +37,7 @@
 		C8A610081A91D8B100139EEC /* DropDownCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8A610061A91D8B100139EEC /* DropDownCell.xib */; };
 		C8A6100C1A91D8F200139EEC /* TickCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C8A6100A1A91D8F200139EEC /* TickCell.m */; };
 		C8A6100D1A91D8F200139EEC /* TickCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8A6100B1A91D8F200139EEC /* TickCell.xib */; };
+		C8CE7F251A926B930075F443 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8CE7F241A926B930075F443 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,7 @@
 		C8A610091A91D8F200139EEC /* TickCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TickCell.h; sourceTree = "<group>"; };
 		C8A6100A1A91D8F200139EEC /* TickCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TickCell.m; sourceTree = "<group>"; };
 		C8A6100B1A91D8F200139EEC /* TickCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TickCell.xib; sourceTree = "<group>"; };
+		C8CE7F241A926B930075F443 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8CE7F251A926B930075F443 /* MapKit.framework in Frameworks */,
 				42FD6C4D18DC286B000BF2B9 /* CoreGraphics.framework in Frameworks */,
 				42FD6C4F18DC286B000BF2B9 /* UIKit.framework in Frameworks */,
 				42FD6C4B18DC286B000BF2B9 /* Foundation.framework in Frameworks */,
@@ -167,6 +170,7 @@
 		42FD6C4918DC286B000BF2B9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C8CE7F241A926B930075F443 /* MapKit.framework */,
 				42FD6C4A18DC286B000BF2B9 /* Foundation.framework */,
 				42FD6C4C18DC286B000BF2B9 /* CoreGraphics.framework */,
 				42FD6C4E18DC286B000BF2B9 /* UIKit.framework */,

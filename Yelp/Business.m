@@ -35,6 +35,12 @@
         self.ratingImageUrl = dictionary[@"rating_img_url"];
         float milesPerMeter = 0.000621371;
         self.distance = [dictionary[@"distance"] integerValue] * milesPerMeter;
+        
+        CLLocationCoordinate2D coordinate;
+        coordinate.latitude = [[dictionary valueForKeyPath:@"location.coordinate.latitude"] doubleValue];
+        coordinate.longitude = [[dictionary valueForKeyPath:@"location.coordinate.longitude"] doubleValue];
+        self.myCenter = coordinate;
+        NSLog(@"coordinate %f, %f", coordinate.latitude, coordinate.longitude);
     }
     
     return self;
@@ -47,6 +53,14 @@
         [businesses addObject:business];
     }
     return businesses;
+}
+
+- (NSString *)title {
+    return self.name;
+}
+
+- (CLLocationCoordinate2D)coordinate {
+    return self.myCenter;
 }
 
 @end

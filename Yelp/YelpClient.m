@@ -29,9 +29,17 @@
 }
 
 - (AFHTTPRequestOperation *)searchWithTerm:(NSString *)term filters:(Filters *)filters offset:(NSInteger)offset success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
+    CLLocationCoordinate2D location;
+    location.latitude = 37.774866;
+    location.longitude = -122.394556;
+    return [self searchWithTerm:term filters:filters offset:offset location:location success:success failure:failure];
+}
+
+- (AFHTTPRequestOperation *)searchWithTerm:(NSString *)term filters:(Filters *)filters offset:(NSInteger)offset location:(CLLocationCoordinate2D)location success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
     // For additional parameters, see http://www.yelp.com/developers/documentation/v2/search_api
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    [parameters addEntriesFromDictionary:@{@"term": term, @"ll" : @"37.774866,-122.394556"}];
+    [parameters setObject:term forKey:@"term"];
+    [parameters setObject:[NSString stringWithFormat:@"%f,%f", location.latitude, location.longitude] forKey:@"ll"];
     if (filters) {
         if (filters.offeringDeal) {
             [parameters setObject:@YES forKey:@"deals_filter"];

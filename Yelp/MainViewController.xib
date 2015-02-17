@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
             <connections>
+                <outlet property="mapView" destination="LfT-XL-VnU" id="pEG-AC-FPs"/>
                 <outlet property="tableView" destination="iWh-pW-1It" id="aKO-bB-CUS"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -20,13 +21,20 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
+                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="LfT-XL-VnU">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                </mapView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="LfT-XL-VnU" secondAttribute="bottom" id="0vZ-OJ-dQo"/>
+                <constraint firstItem="LfT-XL-VnU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="3Ej-VO-2vj"/>
                 <constraint firstItem="iWh-pW-1It" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="E7F-i0-DBu"/>
+                <constraint firstAttribute="trailing" secondItem="LfT-XL-VnU" secondAttribute="trailing" id="IQS-AG-MSk"/>
                 <constraint firstAttribute="bottom" secondItem="iWh-pW-1It" secondAttribute="bottom" id="JcR-sk-Tvp"/>
                 <constraint firstAttribute="trailing" secondItem="iWh-pW-1It" secondAttribute="trailing" id="K2E-I6-dNw"/>
                 <constraint firstItem="iWh-pW-1It" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="RmT-Vj-pam"/>
+                <constraint firstItem="LfT-XL-VnU" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="qmI-fe-sGv"/>
             </constraints>
         </view>
     </objects>
