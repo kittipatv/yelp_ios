@@ -31,4 +31,10 @@ Time spent: `12 hours`
 
 ### Walkthrough
 
-![Video Walkthrough](...)
+![Video Walkthrough](yelp.gif)
+
+Credits
+---------
+* [Yelp API](http://www.yelp.com/developers/documentation/v2/search_api)
+* [AFNetworking](https://github.com/AFNetworking/AFNetworking)
+* [iconmostr](http://iconmonstr.com/)
